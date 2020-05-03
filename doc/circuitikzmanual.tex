@@ -3030,7 +3030,7 @@ The symbols can also be used along a path, using the transistor-path-syntax(\tex
 
 
 
-\subsection{Double bipoles (transformers)}
+\subsection{Double bipoles (transformers)}\label{sec:double bipoles}
 
 Transformers automatically use the inductor shape currently selected. These are the three possibilities:
 \begin{groupdesc}
@@ -3060,7 +3060,7 @@ Transformers with core are also available:
     \ctikzset{inductor=cute} % reset default
 \end{groupdesc}
 
-\subsubsection{Double dipoles anchors}
+\subsubsection{Double bipoles anchors}
 
 All the double bipoles/quadrupoles have the four anchors, two for each port.
 The first port, to the left, is port \texttt{A}, having the anchors \texttt{A1} (up) and \texttt{A2} (down); same for port \texttt{B}.
@@ -3153,7 +3153,7 @@ Moreover, you can access the two internal coils (inductances); if your transform
 \node [ocirc] at (T.B1){}; \node [ocirc] at (T.B2){};
 \end{circuitikz}
 \end{LTXexample}
-\subsubsection{Double dipoles customization}
+\subsubsection{Double bipoles customization}
 
 Transformers are in the \texttt{inductors} class (also the gyrator\dots), so they scale with the key \texttt{inductors/scale}.
 
@@ -3269,6 +3269,88 @@ You can obviously define a style for a ``non-standard'' transformer. For example
 \end{LTXexample}
 
 Remember that the default \texttt{pgfkeys} directory is \texttt{/tikz} for nodes and for the options of the environment, so you \emph{have} to use the full path (with \texttt{circuitikz/}) there.
+
+\subsection{Triple Bipoles (Transformer)}%
+%
+The Triple Bipoles are a fork of the \autoref{sec:double bipoles} as nearly all of the code was copied and reassembled. Therefore the same options are available as in the \hyperref[sec:double bipoles]{previous sections}.\\%
+%
+One can specify the style of the inductors:%
+\begin{groupdesc}
+    \ctikzset{inductor=american}
+    \circuitdesc{tritransformer}{Transformer (american inductor)}{}(
+        A1/180/.1,
+        A2/180/.1,
+        B1/0/.1,
+        B2/0/.1,
+        C1/0/.1,
+        C2/0/.1)
+%
+    \ctikzset{inductor=european}
+    \circuitdesc{tritransformer}{Transformer (european inductor)}{}(
+        inner dot A1/190/.3,
+        inner dot A2/-190/.3,
+        inner dot B1/0/.3,
+        inner dot B2/30/.3,
+        inner dot C1/-30/.3,
+        inner dot C2/0/.3)
+%         
+    \ctikzset{inductor=cute}
+    \circuitdesc{tritransformer}{Transformer (cute inductor)}{}(
+        outer dot A1/190/.2,
+        outer dot A2/-190/.2,
+        outer dot B1/0/.2,
+        outer dot B2/30/.2,
+        outer dot C1/-30/.2,
+        outer dot C2/0/.2)
+%
+\end{groupdesc}%
+%
+Add some dots for the direction of the windings:%
+\begin{LTXexample}[varwidth]%
+\begin{circuitikz}%
+    \ctikzset{inductor=american};
+    \draw (1,0) node[tritransformer](somedots) {}
+        (somedots.outer dot A1) node[circ]{}
+        (somedots.outer dot B1) node[circ]{}
+        (somedots.outer dot C2) node[circ]{};
+\end{circuitikz}%
+\end{LTXexample}%
+%
+Set the inline style:%
+\begin{LTXexample}[varwidth]%
+\begin{circuitikz}%
+    \ctikzset{hexapoles style=inline}
+    \draw (4,-5) node[tritransformer core](thisisverycool!) {}
+        (thisisverycool!.A1) node[circ]{}
+        (thisisverycool!.A2) node[circ]{}
+        (thisisverycool!.B1) node[circ]{}
+        (thisisverycool!.B2) node[circ]{}
+        (thisisverycool!.C1) node[circ]{}
+        (thisisverycool!.C2) node[circ]{};
+\end{circuitikz}%
+\end{LTXexample}%
+%
+And change the style of each inductor:%
+\begin{LTXexample}[varwidth]%
+\begin{circuitikz}[mytransformer/.style={tritransformer core,
+        circuitikz/tritransformer L1/.style={
+        american inductors,
+        inductors/coils=8,
+        inductors/width=.8},
+        circuitikz/tritransformer L2/.style={
+        european inductors,
+        inductors/coils=3,
+        inductors/width=1.2},
+        circuitikz/tritransformer L3/.style={
+        cute inductors,
+        inductors/coils=5,
+        inductors/width=.5},
+        circuitikz/hexapoles/tritransformer core/height=2,
+        circuitikz/hexapoles/tritransformer core/width=1.5
+    }]%
+    \draw (2.5,-7.5) node[mytransformer] {};
+\end{circuitikz}%
+\end{LTXexample}%
 
 \subsection{Amplifiers}
 

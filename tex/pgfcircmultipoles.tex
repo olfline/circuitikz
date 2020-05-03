@@ -2686,4 +2686,376 @@
     }
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Hexapoles
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% % %Macros for the tritransformer
+% #1 name
+% #2 code
+% #3 anchors
+%This macro is mostly copied from the original doublebipole --> see quadpoles
+\long\def\pgfcircdeclarehexapole#1#2#3{
+    \pgfdeclareshape{#1}
+    {
+        \savedmacro{\ctikzclass}{\edef\ctikzclass{inductors}}
+        \saveddimen{\scaledRlen}{\pgfmathsetlength{\pgf@x}{\ctikzvalof{\ctikzclass/scale}\pgf@circ@Rlen}}
+        % shapename
+        \savedmacro{\thisshape}{\def\thisshape{\tikz@fig@name}}
+        \anchor{center}{
+            \northwest
+            \pgf@x=0pt
+            \pgf@y=0pt
+        }
+        \savedmacro{\stretto}{\def\stretto{\ctikzvalof{hexapoles/#1/inner}}}
+        \savedanchor\northwest{%
+            \pgfmathsetlength{\pgf@circ@scaled@Rlen}{\ctikzvalof{\ctikzclass/scale}\pgf@circ@Rlen}
+            \pgf@y=\ctikzvalof{hexapoles/#1/height}\pgf@circ@scaled@Rlen
+            \pgf@y=.5\pgf@y
+            \pgf@x=.5\pgf@circ@scaled@Rlen
+            \pgf@x=-\ctikzvalof{hexapoles/#1/width}\pgf@x
+        }
+        %% we define the upper right (positive coord) dot (which is B1)
+        \savedanchor{\innerdot}{%
+            \pgfmathsetlength{\pgf@circ@scaled@Rlen}{\ctikzvalof{\ctikzclass/scale}\pgf@circ@Rlen}
+            \pgf@xa=.5\pgf@circ@scaled@Rlen
+            \pgf@xa=-\ctikzvalof{hexapoles/#1/width}\pgf@xa
+            % by default use the cute inductor size
+            \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa-\ctikzvalof{bipoles/cuteinductor/height}*\pgf@circ@scaled@Rlen/2}
+            % check if it's american
+            \edef\pgf@circ@temp{\ctikzvalof{inductor}}
+            \edef\pgf@temp{american}
+            \ifx\pgf@circ@temp\pgf@temp
+                \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa-\ctikzvalof{bipoles/americaninductor/height}*\pgf@circ@scaled@Rlen/2}
+            \fi
+            % check if it's european
+            \edef\pgf@temp{european}
+            \ifx\pgf@circ@temp\pgf@temp
+                \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa-\ctikzvalof{bipoles/fullgeneric/height}*\pgf@circ@scaled@Rlen/2}
+            \fi
+            \pgfmathsetlength\pgf@y{0.27*\pgf@circ@scaled@Rlen}
+        }
+        \savedanchor{\outerdot}{%
+            \pgfmathsetlength{\pgf@circ@scaled@Rlen}{\ctikzvalof{\ctikzclass/scale}\pgf@circ@Rlen}
+            \pgf@xa=.5\pgf@circ@scaled@Rlen
+            \pgf@xa=-\ctikzvalof{hexapoles/#1/width}\pgf@xa
+            % by default use the cute inductor size
+            \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa+\ctikzvalof{bipoles/cuteinductor/height}*\pgf@circ@scaled@Rlen/2}
+            % check if it's american
+            \edef\pgf@circ@temp{\ctikzvalof{inductor}}
+            \edef\pgf@temp{american}
+            \ifx\pgf@circ@temp\pgf@temp
+                \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa+\ctikzvalof{bipoles/americaninductor/height}*\pgf@circ@scaled@Rlen/2}
+            \fi
+            % check if it's european
+            \edef\pgf@temp{european}
+            \ifx\pgf@circ@temp\pgf@temp
+                \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa+\ctikzvalof{bipoles/fullgeneric/height}*\pgf@circ@scaled@Rlen/2}
+            \fi
+            \pgfmathsetlength\pgf@y{0.27*\pgf@circ@scaled@Rlen}
+        }
+            \savedanchor{\innerdotsec}{%
+            \pgfmathsetlength{\pgf@circ@scaled@Rlen}{\ctikzvalof{\ctikzclass/scale}\pgf@circ@Rlen}
+            \pgf@xa=.5\pgf@circ@scaled@Rlen
+            \pgf@xa=-\ctikzvalof{hexapoles/#1/width}\pgf@xa
+            % by default use the cute inductor size
+            \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa-\ctikzvalof{bipoles/cuteinductor/height}*\pgf@circ@scaled@Rlen/2}
+            % check if it's american
+            \edef\pgf@circ@temp{\ctikzvalof{inductor}}
+            \edef\pgf@temp{american}
+            \ifx\pgf@circ@temp\pgf@temp
+                \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa-\ctikzvalof{bipoles/americaninductor/height}*\pgf@circ@scaled@Rlen/2}
+            \fi
+            % check if it's european
+            \edef\pgf@temp{european}
+            \ifx\pgf@circ@temp\pgf@temp
+                \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa-\ctikzvalof{bipoles/fullgeneric/height}*\pgf@circ@scaled@Rlen/2}
+            \fi
+            \pgfmathsetlength\pgf@y{0.65*\pgf@circ@scaled@Rlen}
+        }
+        \savedanchor{\outerdotsec}{%
+            \pgfmathsetlength{\pgf@circ@scaled@Rlen}{\ctikzvalof{\ctikzclass/scale}\pgf@circ@Rlen}
+            \pgf@xa=.5\pgf@circ@scaled@Rlen
+            \pgf@xa=-\ctikzvalof{hexapoles/#1/width}\pgf@xa
+            % by default use the cute inductor size
+            \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa+\ctikzvalof{bipoles/cuteinductor/height}*\pgf@circ@scaled@Rlen/2}
+            % check if it's american
+            \edef\pgf@circ@temp{\ctikzvalof{inductor}}
+            \edef\pgf@temp{american}
+            \ifx\pgf@circ@temp\pgf@temp
+                \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa+\ctikzvalof{bipoles/americaninductor/height}*\pgf@circ@scaled@Rlen/2}
+            \fi
+            % check if it's european
+            \edef\pgf@temp{european}
+            \ifx\pgf@circ@temp\pgf@temp
+                \pgfmathsetlength\pgf@x{-\stretto*\pgf@xa+\ctikzvalof{bipoles/fullgeneric/height}*\pgf@circ@scaled@Rlen/2}
+            \fi
+            \pgfmathsetlength\pgf@y{.65*\pgf@circ@scaled@Rlen}
+        }
+        \anchor{A2}{
+            \northwest
+            \pgf@y=-.45\pgf@y
+        }
+        \anchor{B1}{
+            \northwest
+            \pgf@x=-\pgf@x
+        }
+        \anchor{A1}{
+            \northwest
+            \pgf@y=.45\pgf@y
+        }
+        \anchor{B2}{
+            \northwest
+            \pgf@x=-\pgf@x
+            \pgf@y=.1\pgf@y
+        }
+        \anchor{C1}{
+            \northwest
+            \pgf@x=-\pgf@x
+            \pgf@y=-.1\pgf@y
+        }
+        \anchor{C2}{
+            \northwest
+            \pgf@x=-\pgf@x
+            \pgf@y=-\pgf@y
+        }
+        %% dot's anchors
+        \anchor{inner dot A1}{\innerdot\pgf@x=-\pgf@x}
+        \anchor{outer dot A1}{\outerdot\pgf@x=-\pgf@x}
+        \anchor{inner dot A2}{\innerdot\pgf@x=-\pgf@x\pgf@y=-\pgf@y}
+        \anchor{outer dot A2}{\outerdot\pgf@x=-\pgf@x\pgf@y=-\pgf@y}
+        
+        \anchor{inner dot B1}{\innerdotsec}
+        \anchor{outer dot B1}{\outerdotsec}
+        \anchor{inner dot B2}{\innerdotsec\pgf@y=.27\pgf@y}
+        \anchor{outer dot B2}{\outerdotsec\pgf@y=.27\pgf@y}
+        \anchor{inner dot C1}{\innerdotsec\pgf@y=-.27\pgf@y}
+        \anchor{outer dot C1}{\outerdotsec\pgf@y=-.27\pgf@y}
+        \anchor{inner dot C2}{\innerdotsec\pgf@y=-\pgf@y}
+        \anchor{outer dot C2}{\outerdotsec\pgf@y=-\pgf@y}
+        % geographical
+        \anchor{north}{
+            \northwest
+            \pgf@x=0pt
+        }
+        \anchor{south}{
+            \northwest
+            \pgf@x=0pt
+            \pgf@y=-\pgf@y
+        }
+        \anchor{west}{
+            \northwest
+            \pgf@y=0pt
+        }
+        \anchor{east}{
+            \northwest
+            \pgf@y=0pt
+            \pgf@x=-\pgf@x
+        }
+        \anchor{south west}{
+            \northwest
+            \pgf@y=-\pgf@y
+        }
+        \anchor{north east}{
+            \northwest
+            \pgf@x=-\pgf@x
+        }
+        \anchor{north west}{
+            \northwest
+        }
+        \anchor{south east}{
+            \northwest
+            \pgf@x=-\pgf@x
+            \pgf@y=-\pgf@y
+        }
+        \anchor{base}{
+            \northwest
+            \pgf@x=0pt
+        }
+        #3
+        \backgroundpath{
+            \pgfsetcolor{\ctikzvalof{color}}
+
+            \northwest
+            \pgf@circ@res@up = \pgf@y
+            \pgf@circ@res@down = -\pgf@y
+            \pgf@circ@res@right = -\pgf@x
+            \pgf@circ@res@left = \pgf@x
+            #2
+        }
+    }
+}
+
+
+%This macro is mostly copied from the original doublebipole --> see quadpoles
+\def\pgf@circ@drawtransformerbasicbodyhex{
+    %inductors are toooooo big
+%     \def\pgf@temptemp{inductors/scale}
+    \ctikzset{inductors/scale=\ctikzvalof{hexapoles/tritransformer/inductorscale}}
+    
+    \pgfscope
+        \pgfslopedattimetrue
+        \pgfallowupsidedownattimetrue
+        \pgftransformlineattime{.5}{%
+            \pgfpoint%
+            {\stretto\pgf@circ@res@left}%
+            {.45\pgf@circ@res@up}%
+            }{%
+            \pgfpoint
+            {\stretto\pgf@circ@res@left}%
+            {.45\pgf@circ@res@down}%
+        }
+
+        \pgfkeys{\circuitikzbasekey/.cd, tritransformer L1}
+        \edef\pgf@circ@temp{\ctikzvalof{inductor}}%
+        \def\pgf@temp{european}%
+        \ifx\pgf@temp\pgf@circ@temp%
+            \pgfnode{fullgenericshape}{center}{}{\thisshape-L1}{\pgfusepath{stroke}}
+        \else%
+            \def\pgf@temp{cute}
+            \ifx\pgf@temp\pgf@circ@temp%
+                \pgfnode{cuteinductorshape}{center}{}{\thisshape-L1}{\pgfusepath{stroke}}
+            \else%
+                \pgfnode{americaninductorshape}{center}{}{\thisshape-L1}{\pgfusepath{stroke}}
+            \fi%
+        \fi%
+
+
+    \endpgfscope
+    \pgfscope
+        \pgfslopedattimetrue
+        \pgfallowupsidedownattimetrue
+        \pgftransformlineattime{.5}{%
+            \pgfpoint%
+            {\stretto\pgf@circ@res@right}%
+            {.1\pgf@circ@res@up}%
+            }{%
+            \pgfpoint
+            {\stretto\pgf@circ@res@right}%
+            {\pgf@circ@res@up}%
+        }
+
+        \pgfkeys{\circuitikzbasekey/.cd, tritransformer L2}
+        \edef\pgf@circ@temp{\ctikzvalof{inductor}}%
+        \def\pgf@temp{european}%
+        \ifx\pgf@temp\pgf@circ@temp%
+            \pgfnode{fullgenericshape}{center}{}{\thisshape-L2}{\pgfusepath{stroke}}
+        \else%
+            \def\pgf@temp{cute}
+            \ifx\pgf@temp\pgf@circ@temp%
+                \pgfnode{cuteinductorshape}{center}{}{\thisshape-L2}{\pgfusepath{stroke}}
+            \else%
+                \pgfnode{americaninductorshape}{center}{}{\thisshape-L2}{\pgfusepath{stroke}}
+            \fi%
+        \fi%
+
+    \endpgfscope
+    
+    \pgfscope
+        \pgfslopedattimetrue
+        \pgfallowupsidedownattimetrue
+        \pgftransformlineattime{.5}{%
+            \pgfpoint%
+            {\stretto\pgf@circ@res@right}%
+            {\pgf@circ@res@down}%
+            }{%
+            \pgfpoint
+            {\stretto\pgf@circ@res@right}%
+            {.1\pgf@circ@res@down}%
+        }
+
+        \pgfkeys{\circuitikzbasekey/.cd, tritransformer L3}
+        \edef\pgf@circ@temp{\ctikzvalof{inductor}}%
+        \def\pgf@temp{european}%
+        \ifx\pgf@temp\pgf@circ@temp%
+            \pgfnode{fullgenericshape}{center}{}{\thisshape-L3}{\pgfusepath{stroke}}
+        \else%
+            \def\pgf@temp{cute}
+            \ifx\pgf@temp\pgf@circ@temp%
+                \pgfnode{cuteinductorshape}{center}{}{\thisshape-L3}{\pgfusepath{stroke}}
+            \else%
+                \pgfnode{americaninductorshape}{center}{}{\thisshape-L3}{\pgfusepath{stroke}}
+            \fi%
+        \fi%
+
+    \endpgfscope
+
+    \pgfpathmoveto{\pgfpoint{\pgf@circ@res@left}{.45\pgf@circ@res@up}}
+    \pgfpathlineto{\pgfpoint{\stretto\pgf@circ@res@left}{.45\pgf@circ@res@up}}
+    \pgfpathlineto{\pgfpointanchor{\thisshape-L1}{b}}
+
+    \pgfpathmoveto{\pgfpointanchor{\thisshape-L1}{a}}
+    \pgfpathlineto{\pgfpoint{\stretto\pgf@circ@res@left}{.45\pgf@circ@res@down}}
+    \pgfpathlineto{\pgfpoint{\pgf@circ@res@left}{.45\pgf@circ@res@down}}
+
+    \pgfpathmoveto{\pgfpoint{\pgf@circ@res@right}{\pgf@circ@res@up}}
+    \pgfpathlineto{\pgfpoint{\stretto\pgf@circ@res@right}{\pgf@circ@res@up}}
+    \pgfpathlineto{\pgfpointanchor{\thisshape-L2}{a}}
+
+    \pgfpathmoveto{\pgfpointanchor{\thisshape-L2}{b}}
+    \pgfpathlineto{\pgfpoint{\stretto\pgf@circ@res@right}{.1\pgf@circ@res@up}}
+    \pgfpathlineto{\pgfpoint{\pgf@circ@res@right}{.1\pgf@circ@res@up}}
+    
+    \pgfpathmoveto{\pgfpoint{\pgf@circ@res@right}{.1\pgf@circ@res@down}}
+    \pgfpathlineto{\pgfpoint{\stretto\pgf@circ@res@right}{.1\pgf@circ@res@down}}
+    \pgfpathlineto{\pgfpointanchor{\thisshape-L3}{a}}
+
+    \pgfpathmoveto{\pgfpointanchor{\thisshape-L3}{b}}
+    \pgfpathlineto{\pgfpoint{\stretto\pgf@circ@res@right}{\pgf@circ@res@down}}
+    \pgfpathlineto{\pgfpoint{\pgf@circ@res@right}{\pgf@circ@res@down}}
+    
+    \pgfusepath{draw}
+%     \ctikzset{inductors/scale=\ctikzvalof{\pgf@temptemp}}
+}
+
+
+% % % % transformer with three windings
+%This is mostly copied from the original doublebipole --> see quadpoles
+\pgfcircdeclarehexapole{tritransformer}{
+    \pgf@circ@drawtransformerbasicbodyhex
+}
+{}
+
+
+% % % % transformer with three windings and core
+%This is mostly copied from the original doublebipole --> see quadpoles
+\pgfcircdeclarehexapole{tritransformer core}{
+
+    \pgf@circ@drawtransformerbasicbodyhex
+
+    % use the chocke line thickness
+    \pgfsetlinewidth{\ctikzvalof{bipoles/cutechoke/cthick}\pgflinewidth}
+
+    % Find the distance from center for the lines representing the core
+    % the 2.5 is for backward compatibility --- the distance was calculated as a fraction
+    % of the whole component, now as a fraction of the distance between coils, to be
+    % compatible with the quadpoles "inner" style.
+    \pgfmathsetlength{\pgf@circ@res@other}{2.5*\stretto*\ctikzvalof{hexapoles/tritransformer core/core width}*\pgf@circ@res@right}
+
+    \pgfmoveto{\pgfpoint%
+        {\pgf@circ@res@other}%
+        {\ctikzvalof{hexapoles/tritransformer core/core height}\pgf@circ@res@down}%
+    }
+    \pgflineto{
+        \pgfpoint%
+        {\pgf@circ@res@other}%
+        {\ctikzvalof{hexapoles/tritransformer core/core height}\pgf@circ@res@up}%
+    }
+
+    %% this should be just -\pgf@circ@res@other, but in case someone define an asymmetric trafo someday...
+    \pgfmathsetlength{\pgf@circ@res@other}{2.5*\stretto*\ctikzvalof{hexapoles/tritransformer core/core width}*\pgf@circ@res@left}
+    \pgfmoveto{\pgfpoint%
+        {\pgf@circ@res@other}%
+        {\ctikzvalof{hexapoles/tritransformer core/core height}\pgf@circ@res@down}%
+    }
+    \pgflineto{
+        \pgfpoint%
+        {\pgf@circ@res@other}%
+        {\ctikzvalof{hexapoles/tritransformer core/core height}\pgf@circ@res@up}%
+    }
+
+    \pgf@circ@setlinewidth{bipoles}{\pgflinewidth}
+    \pgfusepath{draw}
+}{}%{\pgf@circ@drawtransformerbasicanchor} %maybe this will be needed someday as in the original code --quadpoles

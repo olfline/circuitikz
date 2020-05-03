@@ -1597,6 +1597,41 @@
     }%
 }
 
+%%% hexapoles
+\ctikzset{hexapoles/tritransformer/inner/.initial=0.3}
+\ctikzset{hexapoles/tritransformer/width/.initial=1.5}
+\ctikzset{hexapoles/tritransformer/height/.initial=1.5}
+\ctikzset{hexapoles/tritransformer/inductorscale/.initial=.6}
+% \ctikzset{hexapoles/tritransformer/width1/.initial=.4}% maybe later needed?
+% \ctikzset{hexapoles/tritransformer/height1/.initial=.8}% maybe later needed?
+
+\ctikzset{hexapoles/tritransformer core/inner/.initial=0.3}
+\ctikzset{hexapoles/tritransformer core/width/.initial=1.5}
+\ctikzset{hexapoles/tritransformer core/height/.initial=1.5}
+\ctikzset{hexapoles/tritransformer core/core height/.initial=.8}
+\ctikzset{hexapoles/tritransformer core/core width/.initial=.05}
+
+\ctikzset{tritransformer L1/.style={}} %every inductor can be specified
+\ctikzset{tritransformer L2/.style={}}
+\ctikzset{tritransformer L3/.style={}}
+
+\ctikzset{hexapoles style/.is choice}
+\ctikzset{hexapoles style/inward/.code={% default value
+        \ctikzset{hexapoles/tritransformer/inner=0.4}%
+        \ctikzset{hexapoles/tritransformer/width=1.5}%
+        \ctikzset{hexapoles/tritransformer core/inner=0.4}%
+        \ctikzset{hexapoles/tritransformer core/width=1.5}%
+    }
+}
+
+\ctikzset{hexapoles style/inline/.code={% now horizontal baffle
+        \ctikzset{hexapoles/tritransformer/inner=1}%
+        \ctikzset{hexapoles/tritransformer/width=.6}%
+        \ctikzset{hexapoles/tritransformer core/inner=1}%
+        \ctikzset{hexapoles/tritransformer core/width=.6}%
+    }
+}
+
 %
 % multipoles
 %
